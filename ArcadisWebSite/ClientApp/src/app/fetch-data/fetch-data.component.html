@@ -1,0 +1,50 @@
+<h1>Arcadis Data</h1>
+
+
+
+<p *ngIf="!forecasts"><em>Loading...</em></p>
+<div  *ngIf="forecasts" style="display:inline-flex" >
+  <input type="text" class="form-control" style="margin:10px;" [(ngModel)]="searchstr" /><button style="margin:10px;"  (click)="search()" class="btn btn-primary">search</button> <button style="margin:10px;" (click)="export()" class="btn btn-primary">export to excel</button> <button style="margin:10px;" (click)="addequipment()" class="btn btn-primary">Add</button>
+</div>
+<table class='table' *ngIf="forecasts">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Cost</th>
+      <th>Quantity</th>
+      <th>Total Cost</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr (click)="editDomain(forecast)" *ngFor="let forecast of forecasts">
+      <td>
+        <span *ngIf="!forecast.editable">
+          {{ forecast.title }}
+        </span>
+        <input type="text" class="form-control" [(ngModel)]="forecast.title" *ngIf="forecast.editable" />
+      </td>
+      <td>
+        <span *ngIf="!forecast.editable">
+          {{ forecast.cost }}
+        </span>
+        <input type="number" class="form-control" [(ngModel)]="forecast.cost" *ngIf="forecast.editable" />
+      </td>
+      <td>
+        <span *ngIf="!forecast.editable">
+          {{ forecast.quantity }}
+
+        </span>
+        <input type="number" class="form-control" [(ngModel)]="forecast.quantity" *ngIf="forecast.editable" />
+      </td>
+      <td>{{ forecast.quantity * forecast.cost}}</td>
+      <td>
+        <button class="btn btn-primary" *ngIf="forecast.editable" (click)="edit(forecast)">Submit</button>
+        <button class="btn btn-primary" *ngIf="forecast.editable" (click)="deletedata(forecast)">Delete</button>
+      </td>
+
+    </tr>
+   <tr style="background-color:aliceblue"> <td>Sum Total</td><td>{{forecasts | sum:'cost'}}</td><td>{{forecasts | sum:'quantity'}}</td><td>{{forecasts | sumquantity:''}}</td></tr>
+  </tbody>
+</table>
+
