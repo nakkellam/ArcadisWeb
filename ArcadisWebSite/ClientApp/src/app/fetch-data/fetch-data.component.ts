@@ -25,7 +25,7 @@ export class FetchDataComponent {
 
                 // printing element 
                 if (item.equipmentId == domain.equipmentId)
-                    item.editable = !item.editable;
+                    item.editable = true;
                 else
                     item.editable = false;
                 return item;
