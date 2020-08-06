@@ -39,6 +39,15 @@ export class FetchDataComponent {
         }
         // domain.editable = !domain.editable;
     }
+    cancel() {
+        this.forecasts = this.forecasts.map(item => {
+
+            // printing element 
+            item.foraddition = false;
+            item.editable = false;
+            return item;
+        });
+    }
     search(domain: any) {
         this.httpclnt.get<Equipment[]>(this.baseUrl + 'api/Equipments/' + this.searchstr).subscribe(result => {
             this.forecasts = result;
@@ -118,8 +127,6 @@ export class FetchDataComponent {
             });
         }
     }
-
-
     deletedata(domain: any) {
         if (!domain.foraddition) {
             this.httpclnt.delete(this.baseUrl + 'api/Equipments/' + domain.equipmentId, domain).subscribe(result => {
