@@ -60,13 +60,18 @@ export class FetchDataComponent {
         newEquipment.quantity = 0;
         newEquipment.foraddition = true;
         newEquipment.editable = true;
-        this.forecasts = this.forecasts.map(item => {
+        if (this.forecasts) {
+            this.forecasts = this.forecasts.map(item => {
 
-            // printing element 
-            item.foraddition = false;
-            item.editable = false;
-            return item;
-        });
+                // printing element 
+                item.foraddition = false;
+                item.editable = false;
+                return item;
+            });
+        }
+        else {
+            this.forecasts = [] as Equipment[];
+        }
         this.forecasts.push(newEquipment)
 
     }
