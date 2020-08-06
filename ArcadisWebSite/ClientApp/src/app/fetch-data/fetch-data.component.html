@@ -2,9 +2,9 @@
 
 
 
-<p *ngIf="!forecasts"><em>Loading...</em></p>
+<p *ngIf="!forecasts"><button style="margin:10px;" (click)="LoadData()" class="btn btn-primary">LoadData</button></p>
 <div  *ngIf="forecasts" style="display:inline-flex" >
-  <input type="text" class="form-control" style="margin:10px;" [(ngModel)]="searchstr" /><button style="margin:10px;"  (click)="search()" class="btn btn-primary">search</button> <button style="margin:10px;" (click)="export()" class="btn btn-primary">export to excel</button> <button style="margin:10px;" (click)="addequipment()" class="btn btn-primary">Add</button>
+   <input type="text" class="form-control" style="margin:10px;" [(ngModel)]="searchstr" /><button style="margin:10px;"  (click)="search()" class="btn btn-primary">search</button> <button style="margin:10px;" (click)="export()" class="btn btn-primary">export to excel</button> <button style="margin:10px;" (click)="addequipment()" class="btn btn-primary">Add</button>
 </div>
 <table class='table' *ngIf="forecasts">
   <thead>

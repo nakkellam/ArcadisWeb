@@ -14,7 +14,10 @@ export class FetchDataComponent {
     constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
         this.httpclnt = http;
         this.baseUrl = baseUrl;
-        http.get<Equipment[]>(baseUrl + 'api/Equipments').subscribe(result => {
+        
+    }
+    LoadData() {
+        this.httpclnt.get<Equipment[]>(this.baseUrl + 'api/Equipments').subscribe(result => {
             this.forecasts = result;
         }, error => console.error(error));
     }
