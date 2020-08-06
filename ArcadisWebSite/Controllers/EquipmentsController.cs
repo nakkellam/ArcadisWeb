@@ -70,17 +70,17 @@ namespace ArcadisWebSite.Controllers
 
 
         [HttpGet("GetExcel/{title}")]
-        public async Task<IActionResult> GetEquipmentreport([FromRoute] string title)
+        public ActionResult GetEquipmentreport([FromRoute] string title)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             IEnumerable<Equipment> equipment; 
-            if (String.IsNullOrEmpty(title))
+            if (String.IsNullOrEmpty(title) || title == "undefined")
              equipment =    _context.Equipments.ToList();
             else
-             equipment = await _context.Equipments.Where(n => n.Title.Contains(title)).ToListAsync();
+             equipment =  _context.Equipments.Where(n => n.Title.Contains(title)).ToList();
 
             if (equipment == null)
             {
@@ -97,6 +97,7 @@ namespace ArcadisWebSite.Controllers
                 ws.Cell("D4").Value = "Total Cost";
 
                 int row = 5;
+                int grandtotal = 0;
                 foreach (var c in equipment)
                 {
 
@@ -104,15 +105,18 @@ namespace ArcadisWebSite.Controllers
                     ws.Cell("B" + row.ToString()).Value = c.Cost;
                     ws.Cell("C" + row.ToString()).Value = c.Quantity;
                     ws.Cell("D" + row.ToString()).Value = c.Cost * c.Quantity;
+                    grandtotal = grandtotal + (c.Cost * c.Quantity);
 
 
                     row++;
 
                 }
-
+                ws.Cell("A" + row.ToString()).Value = "GrandTotal";
+               
+                ws.Cell("D" + row.ToString()).Value = grandtotal;
 
                 //ws.Range(ws.Cell("A1"), ws.Cell("E1")).Merge();
-                var headersTable = ws.Range(ws.Cell(4, 1), ws.Cell(row - 1, 5)).CreateTable("Headers");
+                var headersTable = ws.Range(ws.Cell(4, 1), ws.Cell(row, 4)).CreateTable("Headers");
                 headersTable.Theme = XLTableTheme.TableStyleMedium2;
                 headersTable.ShowAutoFilter = false;
                 ws.Columns("A", "D").AdjustToContents();

@@ -65,7 +65,7 @@ export class FetchDataComponent {
         this.httpclnt.get(this.baseUrl + 'api/Equipments/GetExcel/' + this.searchstr, { responseType: 'blob', observe: 'response' }).subscribe((result: any) => {
             try {
                 var contentType = 'application/vnd.ms-excel';
-                var blob = new Blob([result], { type: contentType });
+                var blob = new Blob([result.body], { type: contentType });
 
                 var downloadUrl = URL.createObjectURL(blob);
                 var a = document.createElement("a");
